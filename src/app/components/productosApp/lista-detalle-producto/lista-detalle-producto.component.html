@@ -1,0 +1,18 @@
+<div class="container mt-5">
+<div class="d-flex justify-content-center mt-5">
+<h2 class="text-primary">Tienda Online</h2>
+</div>
+<div class="d-flex justify-content-center mt-5">
+<h3 class="text-warning">Listado De Productos</h3>
+</div>
+<ul class="list-group w-50 mx-auto">
+<li *ngFor="let productoItem of ProductoList" class="list-group-item text-center">
+<app-producto [productoInput]="productoItem"></app-producto>
+</li>
+</ul>
+<div class="d-flex justify-contecnt-center mt-3">
+<!-- <app-formulario-producto (nuevoProductoOutPut)="onAgregarProductoList($event)"></app-formulario-producto> -->
+<app-formulario-producto></app-formulario-producto>
+</div>
+
+</div>

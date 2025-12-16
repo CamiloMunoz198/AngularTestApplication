@@ -1,27 +1,57 @@
-import { Compiler, CompilerFactory, COMPILER_OPTIONS, NgModule } from '@angular/core';
+import {
+  Compiler,
+  CompilerFactory,
+  COMPILER_OPTIONS,
+  NgModule,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
 import { JitCompilerFactory } from '@angular/platform-browser-dynamic';
-import { CalculadoraComponent } from './components/calculadora/calculadora.component';
-import { ResultadoDetalleComponent } from './components/resultado-detalle/resultado-detalle.component';
-import { ListaDetalleProductoComponent } from './components/lista-detalle-producto/lista-detalle-producto.component';
-import { FormularioProductoComponent } from './components/formulario-producto/formulario-producto.component';
-import { ProductoComponent } from './components/producto/producto.component';
+import { CalculadoraComponent } from './components/calculadoraApp/calculadora/calculadora.component';
+import { ResultadoDetalleComponent } from './components/calculadoraApp/resultado-detalle/resultado-detalle.component';
+import { ListaDetalleProductoComponent } from './components/productosApp/lista-detalle-producto/lista-detalle-producto.component';
+import { FormularioProductoComponent } from './components/productosApp/formulario-producto/formulario-producto.component';
+import { ProductoComponent } from './components/productosApp/producto/producto.component';
+import { ListadoUsuariosComponent } from './components/usuariosApp/listado-usuarios/listado-usuarios.component';
+import { HttpClientModule } from '@angular/common/http';
+import { PresupuestoComponent } from './components/presupuestoApp/presupuesto/presupuesto.component';
+import { HeaderPresupuestoComponent } from './components/presupuestoApp/header-presupuesto/header-presupuesto.component';
+import { EgresosPresupuestoComponent } from './components/presupuestoApp/egresos-presupuesto/egresos-presupuesto.component';
+import { IngresosPresupuestoComponent } from './components/presupuestoApp/ingresos-presupuesto/ingresos-presupuesto.component';
+import { FormularioPresupuestoComponent } from './components/presupuestoApp/formulario-presupuesto/formulario-presupuesto.component';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule,ReactiveFormsModule ],
-  declarations: [ AppComponent, HelloComponent,CalculadoraComponent,ResultadoDetalleComponent,ListaDetalleProductoComponent,FormularioProductoComponent,ProductoComponent ],
-  bootstrap:    [ AppComponent ],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  declarations: [
+    AppComponent,
+    HelloComponent,
+    CalculadoraComponent,
+    ResultadoDetalleComponent,
+    ListaDetalleProductoComponent,
+    FormularioProductoComponent,
+    ProductoComponent,
+    ListadoUsuariosComponent,
+    PresupuestoComponent,
+    HeaderPresupuestoComponent,
+    FormularioPresupuestoComponent,
+    EgresosPresupuestoComponent,
+    IngresosPresupuestoComponent,
+  ],
+  bootstrap: [AppComponent],
   providers: [
     { provide: COMPILER_OPTIONS, useValue: {}, multi: true },
-    { provide: CompilerFactory, useClass: JitCompilerFactory, deps: [COMPILER_OPTIONS] },
-    { provide: Compiler, useFactory: createCompiler, deps: [CompilerFactory] }
-  ]
+    {
+      provide: CompilerFactory,
+      useClass: JitCompilerFactory,
+      deps: [COMPILER_OPTIONS],
+    },
+    { provide: Compiler, useFactory: createCompiler, deps: [CompilerFactory] },
+  ],
 })
-export class AppModule { }
+export class AppModule {}
 
 export function createCompiler(compilerFactory: CompilerFactory) {
   return compilerFactory.createCompiler();

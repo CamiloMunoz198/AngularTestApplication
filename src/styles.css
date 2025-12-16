@@ -38,3 +38,8 @@ body.bg-dark .list-group-item.active {
   border-color: #0d6efd !important;
   color: #ffffff !important;
 }
+
+/* Arreglo para .text-danger (Rojo) en modo oscuro */
+body.bg-dark .text-danger {
+  color: #ea868f !important; /* Un rojo más claro que contrasta con el fondo oscuro */
+}

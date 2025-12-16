@@ -1,0 +1,7 @@
+{{ productoInput.Descripcion | uppercase }} ,
+{{ productoInput.Valor | currency }}
+<input
+  type="submit"
+  class="btn btn-primary ms-3"
+  (click)="enviarDetalleEmitter()"
+/>

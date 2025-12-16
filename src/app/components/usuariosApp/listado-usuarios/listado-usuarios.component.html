@@ -1,0 +1,19 @@
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <ul class="list-group">
+      <ng-container *ngIf="usuariosList.length > 0; else sinUsuarios">
+        <li
+          *ngFor="let usario of usuariosList"
+          class="list-group-item text-center"
+        >
+          {{ usario.id }} - {{ usario.name }}
+        </li>
+      </ng-container>
+      <ng-template #sinUsuarios>
+        <li class="list-group-item text-center text-danger">
+          No Hay Usuarios Disponibles en la Api Json Place Holder
+        </li>
+      </ng-template>
+    </ul>
+  </div>
+</div>
