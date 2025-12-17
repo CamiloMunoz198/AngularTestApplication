@@ -2,18 +2,17 @@
     <!-- Componente: Formulario -->
     <div class="row justify-content-center mt-4">
     <div class="col-md-8">
-      <form class="row g-2">
+      <form class="row g-2" [formGroup]="itemFormGroup" (submit)="onAnadirItem()">
         <div class="col-auto">
-          <select class="form-select bg-success">
-            <option value="ingresoOperacion" selected>+</option>
-            <option value="egresoOperacion">-</option>
+          <select class="form-select bg-success" formControlName="OperacionFormControl">
+            <option *ngFor="let op of operaciones" [value]="op.nombre">{{ op.valor }}</option>
           </select>
         </div>
         <div class="col">
-          <input type="text" class="form-control border-success" placeholder="Descripción" required />
+          <input type="text" class="form-control border-success" formControlName="DescripcionFormControl" placeholder="Descripción" required />
         </div>
         <div class="col-auto">
-          <input type="number" class="form-control border-success" placeholder="Valor" required />
+          <input type="number" class="form-control border-success" formControlName="ValorFormControl" placeholder="Valor" required />
         </div>
         <div class="col-auto">
           <button type="submit" class="btn btn-success">

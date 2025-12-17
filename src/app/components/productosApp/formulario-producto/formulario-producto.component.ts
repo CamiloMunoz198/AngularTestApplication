@@ -25,6 +25,7 @@ export class FormularioProductoComponent implements OnInit {
 
   ngOnInit() {}
   onAgregarProducto() {
+
     const valoresForm = this.productoFormGroup.value;
     let Desc = valoresForm.Descripcion;
     let Val = valoresForm.Valor;

@@ -1,26 +1,20 @@
-     <!-- Componente: Egresos -->
-     <div>
-     <h2 class="text-center text-danger">Egresos</h2>
-     <ul class="list-group mt-3">
-       <li class="list-group-item d-flex justify-content-between align-items-center">
-         <span class="flex-grow-1">Renta Depto</span>
-         <span class="d-flex align-items-center mx-3">
-           <span class="text-danger">- $900.00</span>
-           <span class="badge bg-success ms-2">20%</span>
-         </span>
-         <button class="btn btn-sm btn-danger">
-           <i class="bi bi-x-circle"></i> <!-- Bootstrap Icon -->
-         </button>
-       </li>
-       <li class="list-group-item d-flex justify-content-between align-items-center">
-         <span class="flex-grow-1">Ropa</span>
-         <span class="d-flex align-items-center mx-3">
-           <span class="text-danger">- $200.00</span>
-           <span class="badge bg-success ms-2">4%</span>
-         </span>
-         <button class="btn btn-sm btn-danger">
-           <i class="bi bi-x-circle"></i> <!-- Bootstrap Icon -->
-         </button>
-       </li>
-     </ul>
-   </div>
+<!-- Componente: Egresos -->
+<div>
+  <h2 class="text-center text-danger">Egresos</h2>
+  <ul class="list-group mt-3">
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+      *ngFor="let egreso of (preGestService.obtenerListaEgresosService$|async)"
+    >
+      <span class="flex-grow-1">{{ egreso.DescripcionInterface | uppercase }}</span>
+      <span class="d-flex align-items-center mx-3">
+        <span class="text-danger">{{ egreso.ValorInterface | currency }}</span>
+        <span class="badge bg-success ms-2">{{onEgresoParcial(egreso.ValorInterface)|percent}}</span>
+      </span>
+      <button class="btn btn-sm btn-danger" (click)="onQuitarItem(egreso)">
+        <i class="bi bi-x-circle"></i>
+        <!-- Bootstrap Icon -->
+      </button>
+    </li>
+  </ul>
+</div>

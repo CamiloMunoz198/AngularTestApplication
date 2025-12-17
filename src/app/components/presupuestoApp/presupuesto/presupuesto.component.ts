@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./presupuesto.component.css']
 })
 export class PresupuestoComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit() {

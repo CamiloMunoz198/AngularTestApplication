@@ -36,4 +36,30 @@ export class SweetAlertService {
       showConfirmButton: false,
     });
   }
+
+  mostrarAdvertencia(title: string, text: string): void {
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: 'warning',
+      confirmButtonText: 'Continuar',
+      confirmButtonColor: '#ffc107', // Amarillo Warning de Bootstrap
+      toast: false,
+    });
+  }
+
+  async confirmarEliminacion(title: string, text: string): Promise<boolean> {
+    const result = await Swal.fire({
+      title: title,
+      text: text,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    });
+    
+    return result.isConfirmed;
+  }
 }
