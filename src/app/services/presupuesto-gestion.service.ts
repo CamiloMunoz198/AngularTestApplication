@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ItemPresupuestoInterface } from '../models/item-presupuesto-interface';
 import { SweetAlertService } from './sweet-alert.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { OperacionesPresupuestoEnum } from '../dataEnum/operaciones-presupuesto.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -17,37 +18,37 @@ export class PresupuestoGestionService {
  get obteneregresosTotalService$():Observable<number> { return this.egresosTotalService$.asObservable(); }
  get obtenerporcentajeTotalEgresosService$():Observable<number> { return this.porcentajeTotalEgresosService$.asObservable(); }
 
-  listIngresosService$= new BehaviorSubject<ItemPresupuestoInterface[]>([]);
-  listEgresosService$= new BehaviorSubject<ItemPresupuestoInterface[]>([]);
-  get obtenerListaIngresosService$() { return this.listIngresosService$.asObservable(); }
-  get obtenerListaEgresosService$() { return this.listEgresosService$.asObservable(); }
+  private listIngresosService$= new BehaviorSubject<ItemPresupuestoInterface[]>([]);
+  private listEgresosService$= new BehaviorSubject<ItemPresupuestoInterface[]>([]);
+  get obtenerListaIngresosService$():Observable<ItemPresupuestoInterface[]>  { return this.listIngresosService$.asObservable(); }
+  get obtenerListaEgresosService$():Observable<ItemPresupuestoInterface[]>  { return this.listEgresosService$.asObservable(); }
 
   constructor(private alertService:SweetAlertService) {
-    this.onObtenerLocalStorage();
+    this.obtenerLocalStorage();
   }
 
-  private onGuardarLocalStorage() {
+  private guardarLocalStorage() {
     // Convertimos los arreglos a string JSON para guardarlos
     localStorage.setItem('ingresos_app', JSON.stringify(this.listIngresosService$.value));
     localStorage.setItem('egresos_app', JSON.stringify(this.listEgresosService$.value));
   }
 
-  private onObtenerLocalStorage() {
+  private obtenerLocalStorage() {
     const ingresosStorage = localStorage.getItem('ingresos_app');
     const egresosStorage = localStorage.getItem('egresos_app');
 
     // Si existen datos, los transformamos de texto a objetos. Si no, iniciamos vacíos [].
-    this.listIngresosService$.next(ingresosStorage ? JSON.parse(ingresosStorage) : [])
-    this.listEgresosService$.next(egresosStorage ? JSON.parse(egresosStorage) : [])
+    this.listIngresosService$.next(ingresosStorage ? JSON.parse(ingresosStorage) as ItemPresupuestoInterface[] : [])
+    this.listEgresosService$.next(egresosStorage ? JSON.parse(egresosStorage) as ItemPresupuestoInterface[] : [])
 
     // Importante: Calcular totales iniciales basados en lo que cargamos
-    this.onActualizarValores();
+    this.actualizarValores();
   }
-  private onCalcularPresupuestoService(ingresos:number,egresos:number) {
+  private calcularPresupuestoService(ingresos:number,egresos:number) {
     const presupuestoTotal= ingresos-egresos;
      this.presupuestoTotalService$.next(presupuestoTotal);
   }
-  private onCalcularPorcentajeEgresosService(ingresos:number,egresos:number) {
+  private calcularPorcentajeEgresosService(ingresos:number,egresos:number) {
     const porcentajeTotalEgresosService = 
     ingresos>0?
       egresos / ingresos
@@ -55,16 +56,15 @@ export class PresupuestoGestionService {
       this.porcentajeTotalEgresosService$.next(porcentajeTotalEgresosService);
   }
  
-  private onAgregarIngresoService(itemNuevo: ItemPresupuestoInterface) {
+  private agregarIngresoService(itemNuevo: ItemPresupuestoInterface) {
     this.listIngresosService$.next([...this.listIngresosService$.value, itemNuevo]);//... copia del arreglo y se agrega item nuevo
-    console.log("entreaqui");
   }
 
-  private onAgregarEgresoService(itemNuevo: ItemPresupuestoInterface) {
+  private agregarEgresoService(itemNuevo: ItemPresupuestoInterface) {
     this.listEgresosService$.next([...this.listEgresosService$.value, itemNuevo]);
   }
 
-  private onSumarLista(listItem: ItemPresupuestoInterface[]): number {
+  private sumarLista(listItem: ItemPresupuestoInterface[]): number {
     let result = 0;
     listItem.forEach((item) => {
       result += item.ValorInterface;
@@ -72,31 +72,31 @@ export class PresupuestoGestionService {
     return result;
   }
 
-  private onCargarIngresos(ingresos:number) {
+  private cargarIngresos(ingresos:number) {
      this.ingresosTotalService$.next(ingresos);
   }
-  private onCargarEgresos(egresos:number) {
+  private cargarEgresos(egresos:number) {
     this.egresosTotalService$.next(egresos);
   }
 
-  private onActualizarValores() {
-    const ingresos=this.onSumarLista(this.listIngresosService$.value);
-    const egresos= this.onSumarLista(this.listEgresosService$.value);
-    this.onCargarIngresos(ingresos);
-    this.onCargarEgresos(egresos);
-    this.onCalcularPresupuestoService(ingresos,egresos);
-    this.onCalcularPorcentajeEgresosService(ingresos,egresos);
-    this.onGuardarLocalStorage();
+  private actualizarValores() {
+    const ingresos=this.sumarLista(this.listIngresosService$.value);
+    const egresos= this.sumarLista(this.listEgresosService$.value);
+    this.cargarIngresos(ingresos);
+    this.cargarEgresos(egresos);
+    this.calcularPresupuestoService(ingresos,egresos);
+    this.calcularPorcentajeEgresosService(ingresos,egresos);
+    this.guardarLocalStorage();
   }
 
-  onAgregarItemService(itemNuevo: ItemPresupuestoInterface){
+  agregarItemService(itemNuevo: ItemPresupuestoInterface){
     let OperacionMensaje="";
-    if(itemNuevo.OperacionInterface=="ingreso"){
-      this.onAgregarIngresoService(itemNuevo);
+    if(itemNuevo.OperacionInterface==OperacionesPresupuestoEnum.Ingreso){
+      this.agregarIngresoService(itemNuevo);
       OperacionMensaje="¡Ingreso Agregado!";
     }
-    else if(itemNuevo.OperacionInterface=="egreso"){
-      this.onAgregarEgresoService(itemNuevo);
+    else if(itemNuevo.OperacionInterface==OperacionesPresupuestoEnum.Egreso){
+      this.agregarEgresoService(itemNuevo);
       OperacionMensaje="Egreso Agregado!";
     }
     else{
@@ -106,34 +106,33 @@ export class PresupuestoGestionService {
       );
       return;
     }
-    this.onActualizarValores();
+    this.actualizarValores();
     this.alertService.mostrarExito(
        OperacionMensaje,
       `Descripcion : ${itemNuevo.DescripcionInterface} Valor : ${itemNuevo.ValorInterface}`
     );
   }
 
-  onEgresoParcialService(egresoValor:number):number{
-    const ingresosTotal=this.ingresosTotalService$.value;
+  egresoParcialService(egresoValor:number):number{
     let egresoParcial=
-    ingresosTotal>0?
-    egresoValor/ingresosTotal:
+    this.ingresosTotalService$.value>0?
+    egresoValor/this.ingresosTotalService$.value:
     0
     ;
     return egresoParcial;
   }
 
-  private onQuitarIngresoService(itemEliminar: ItemPresupuestoInterface) {
-   const listIngresos= this.listIngresosService$.value.filter(item => item !== itemEliminar);
+  private quitarIngresoService(itemEliminar: ItemPresupuestoInterface) {
+   const listIngresos= this.listIngresosService$.value.filter(item => item.Id !== itemEliminar.Id);
     this.listIngresosService$.next(listIngresos);
   }
 
-  private onQuitarEgresoService(itemEliminar: ItemPresupuestoInterface) {
-   const listEgresos= this.listEgresosService$.value.filter(item => item !== itemEliminar);
+  private quitarEgresoService(itemEliminar: ItemPresupuestoInterface) {
+   const listEgresos= this.listEgresosService$.value.filter(item => item.Id !== itemEliminar.Id);
     this.listEgresosService$.next(listEgresos);
   }
 
- async onQuitarItemService(itemEliminar: ItemPresupuestoInterface){
+ async quitarItemService(itemEliminar: ItemPresupuestoInterface){
     const confirmar = await this.alertService.confirmarEliminacion(
       '¿Eliminar registro?',
       `¿Deseas quitar "${itemEliminar.DescripcionInterface}"?`
@@ -141,12 +140,12 @@ export class PresupuestoGestionService {
 
     if (confirmar) {
     let OperacionMensaje="";
-    if(itemEliminar.OperacionInterface=="ingreso"){
-      this.onQuitarIngresoService(itemEliminar);
+    if(itemEliminar.OperacionInterface==OperacionesPresupuestoEnum.Ingreso){
+      this.quitarIngresoService(itemEliminar);
       OperacionMensaje="¡Ingreso Eliminado!";
     }
-    else if(itemEliminar.OperacionInterface=="egreso"){
-      this.onQuitarEgresoService(itemEliminar);
+    else if(itemEliminar.OperacionInterface==OperacionesPresupuestoEnum.Egreso){
+      this.quitarEgresoService(itemEliminar);
       OperacionMensaje="Egreso Eliminado!";
     }
     else{
@@ -156,7 +155,7 @@ export class PresupuestoGestionService {
       );
       return;
     }
-    this.onActualizarValores();
+    this.actualizarValores();
     this.alertService.mostrarExito(
        OperacionMensaje,
       `Descripcion : ${itemEliminar.DescripcionInterface} Valor : ${itemEliminar.ValorInterface}`

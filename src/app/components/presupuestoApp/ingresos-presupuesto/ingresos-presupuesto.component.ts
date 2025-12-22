@@ -12,9 +12,4 @@ export class IngresosPresupuestoComponent implements OnInit {
 
   ngOnInit() {
   }
-
-
-  onQuitarItem(itemEliminar:ItemPresupuestoInterface){
-    this.preGestService.onQuitarItemService(itemEliminar);
-  }
 }

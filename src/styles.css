@@ -43,3 +43,19 @@ body.bg-dark .list-group-item.active {
 body.bg-dark .text-danger {
   color: #ea868f !important; /* Un rojo más claro que contrasta con el fondo oscuro */
 }
+
+/* Esto asegura que cuando Bootstrap añada la clase 'show', el menú sea visible */
+.dropdown-menu.show {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.dropdown-menu {
+  z-index: 9999 !important;
+}
+
+.navbar {
+  position: relative;
+  z-index: 10000; /* Asegura que la barra siempre esté encima de todo */
+}

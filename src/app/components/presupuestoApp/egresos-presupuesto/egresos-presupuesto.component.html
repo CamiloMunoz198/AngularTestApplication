@@ -9,9 +9,9 @@
       <span class="flex-grow-1">{{ egreso.DescripcionInterface | uppercase }}</span>
       <span class="d-flex align-items-center mx-3">
         <span class="text-danger">{{ egreso.ValorInterface | currency }}</span>
-        <span class="badge bg-success ms-2">{{onEgresoParcial(egreso.ValorInterface)|percent}}</span>
+        <span class="badge bg-success ms-2">{{preGestService.egresoParcialService(egreso.ValorInterface)|percent}}</span>
       </span>
-      <button class="btn btn-sm btn-danger" (click)="onQuitarItem(egreso)">
+      <button class="btn btn-sm btn-danger" (click)="preGestService.quitarItemService(egreso)">
         <i class="bi bi-x-circle"></i>
         <!-- Bootstrap Icon -->
       </button>

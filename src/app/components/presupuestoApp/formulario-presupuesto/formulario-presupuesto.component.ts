@@ -5,8 +5,8 @@ import { PresupuestoGestionService } from '../../../services/presupuesto-gestion
 import { SweetAlertService } from '../../../services/sweet-alert.service';
 import {
   listaOperaciones,
-  OperationPresupuestoData,
-} from '../../../data/operation-presupuesto-data';
+  OperationPresupuestoDataList,
+} from '../../../dataList/operation-presupuesto-dataList';
 
 @Component({
   selector: 'app-formulario-presupuesto',
@@ -44,11 +44,12 @@ export class FormularioPresupuestoComponent implements OnInit {
       return;
     }
     let itemNuevo: ItemPresupuestoInterface = {
+      Id: (crypto as any).randomUUID(),
       ValorInterface: valor,
       DescripcionInterface: descripcion,
       OperacionInterface: operacion,
     };
-    this.preGestService.onAgregarItemService(itemNuevo);
+    this.preGestService.agregarItemService(itemNuevo);
     this.itemFormGroup.reset({
       OperacionFormControl: operacion, // Mantiene el último signo seleccionado (+ o -)
       DescripcionFormControl: null,
@@ -56,8 +57,14 @@ export class FormularioPresupuestoComponent implements OnInit {
     });
   }
 
-  get operaciones(): OperationPresupuestoData[] {
-    let OperacionesDisponibles: OperationPresupuestoData[] = listaOperaciones;
+  get operaciones(): OperationPresupuestoDataList[] {
+    let OperacionesDisponibles: OperationPresupuestoDataList[] = listaOperaciones;
     return OperacionesDisponibles;
+  }
+
+ get claseDinamicaVerdeRojaOperacion() {
+    const valor = this.itemFormGroup.get('OperacionFormControl')?.value;
+    return valor === 'ingreso' ? 'bg-success text-white' : 
+           valor === 'egreso' ? 'bg-danger text-white' : 'bg-success';
   }
 }

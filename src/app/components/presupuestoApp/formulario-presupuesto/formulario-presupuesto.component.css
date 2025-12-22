@@ -1,0 +1,9 @@
+.form-select {
+  transition: all 0.3s ease-in-out;
+  border: none; /* Opcional: para que se vea más moderno con el fondo de color */
+}
+
+/* Opcional: para que las letras se vean bien siempre */
+.form-select:focus {
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+}

@@ -22,9 +22,11 @@ import { HeaderPresupuestoComponent } from './components/presupuestoApp/header-p
 import { EgresosPresupuestoComponent } from './components/presupuestoApp/egresos-presupuesto/egresos-presupuesto.component';
 import { IngresosPresupuestoComponent } from './components/presupuestoApp/ingresos-presupuesto/ingresos-presupuesto.component';
 import { FormularioPresupuestoComponent } from './components/presupuestoApp/formulario-presupuesto/formulario-presupuesto.component';
+import { AppRoutingModule } from './app-routing/app-routing.module';
+import { MenuNavegacionComponent } from './components/menuApp/menu-navegacion/menu-navegacion.component';
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule,AppRoutingModule],
   declarations: [
     AppComponent,
     HelloComponent,
@@ -39,6 +41,7 @@ import { FormularioPresupuestoComponent } from './components/presupuestoApp/form
     FormularioPresupuestoComponent,
     EgresosPresupuestoComponent,
     IngresosPresupuestoComponent,
+    MenuNavegacionComponent
   ],
   bootstrap: [AppComponent],
   providers: [

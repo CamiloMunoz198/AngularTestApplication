@@ -4,18 +4,18 @@
     <div class="col-md-8">
       <form class="row g-2" [formGroup]="itemFormGroup" (submit)="onAnadirItem()">
         <div class="col-auto">
-          <select class="form-select bg-success" formControlName="OperacionFormControl">
-            <option *ngFor="let op of operaciones" [value]="op.nombre">{{ op.valor }}</option>
+          <select class="form-select bg-success" [ngClass]="claseDinamicaVerdeRojaOperacion" formControlName="OperacionFormControl">
+            <option *ngFor="let op of operaciones" [value]="op.valor">{{ op.nombre }}</option>
           </select>
         </div>
         <div class="col">
-          <input type="text" class="form-control border-success" formControlName="DescripcionFormControl" placeholder="Descripción" required />
+          <input type="text" class="form-control" [ngClass]="claseDinamicaVerdeRojaOperacion" formControlName="DescripcionFormControl" placeholder="Descripción" required />
         </div>
         <div class="col-auto">
-          <input type="number" class="form-control border-success" formControlName="ValorFormControl" placeholder="Valor" required />
+          <input type="number" class="form-control border-success" [ngClass]="claseDinamicaVerdeRojaOperacion" formControlName="ValorFormControl" placeholder="Valor" required />
         </div>
         <div class="col-auto">
-          <button type="submit" class="btn btn-success">
+          <button type="submit" class="btn" [ngClass]="claseDinamicaVerdeRojaOperacion">
             <i class="bi bi-check-circle"></i> <!-- Bootstrap Icon -->
           </button>
         </div>

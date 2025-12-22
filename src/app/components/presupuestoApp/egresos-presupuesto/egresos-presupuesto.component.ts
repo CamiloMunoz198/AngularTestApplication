@@ -13,13 +13,4 @@ export class EgresosPresupuestoComponent implements OnInit {
 
   ngOnInit() {
   }
-
-   onEgresoParcial(egresoValor:number):number{
-    return this.preGestService.onEgresoParcialService(egresoValor);
-  }
-
-  onQuitarItem(itemEliminar:ItemPresupuestoInterface){
-    this.preGestService.onQuitarItemService(itemEliminar);
-  }
-
 }

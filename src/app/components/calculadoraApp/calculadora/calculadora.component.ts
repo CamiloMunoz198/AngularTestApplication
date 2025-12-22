@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // Intenta esta (la más común si el archivo está en una subcarpeta de 'components')
 import { SweetAlertService } from '../../../services/sweet-alert.service';
-import { listaOperaciones, OperationMock } from '../../../data/operation-mock';
+import { listaOperaciones, OperationMock } from '../../../dataList/operation-mock';
 import { ResultadoDetalleComponent } from '../resultado-detalle/resultado-detalle.component';
 
 @Component({
