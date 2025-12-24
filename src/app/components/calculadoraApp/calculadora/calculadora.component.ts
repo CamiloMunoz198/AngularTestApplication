@@ -8,6 +8,7 @@ import { ResultadoDetalleComponent } from '../resultado-detalle/resultado-detall
 @Component({
   selector: 'app-calculadora',
   templateUrl: './calculadora.component.html',
+  standalone: false, // <-- Cambia de true a false
   styleUrls: ['./calculadora.component.css'],
 })
 export class CalculadoraComponent implements OnInit {

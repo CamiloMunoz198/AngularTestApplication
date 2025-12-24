@@ -16,7 +16,7 @@ import { ListaDetalleProductoComponent } from './components/productosApp/lista-d
 import { FormularioProductoComponent } from './components/productosApp/formulario-producto/formulario-producto.component';
 import { ProductoComponent } from './components/productosApp/producto/producto.component';
 import { ListadoUsuariosComponent } from './components/usuariosApp/listado-usuarios/listado-usuarios.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { PresupuestoComponent } from './components/presupuestoApp/presupuesto/presupuesto.component';
 import { HeaderPresupuestoComponent } from './components/presupuestoApp/header-presupuesto/header-presupuesto.component';
 import { EgresosPresupuestoComponent } from './components/presupuestoApp/egresos-presupuesto/egresos-presupuesto.component';
@@ -24,9 +24,12 @@ import { IngresosPresupuestoComponent } from './components/presupuestoApp/ingres
 import { FormularioPresupuestoComponent } from './components/presupuestoApp/formulario-presupuesto/formulario-presupuesto.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { MenuNavegacionComponent } from './components/menuApp/menu-navegacion/menu-navegacion.component';
+import { ErrorNavegacionComponent } from './components/error-navegacion/error-navegacion.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule,AppRoutingModule],
+  imports: [BrowserModule, ReactiveFormsModule, HttpClientModule,AppRoutingModule],
   declarations: [
     AppComponent,
     HelloComponent,
@@ -41,7 +44,9 @@ import { MenuNavegacionComponent } from './components/menuApp/menu-navegacion/me
     FormularioPresupuestoComponent,
     EgresosPresupuestoComponent,
     IngresosPresupuestoComponent,
-    MenuNavegacionComponent
+    MenuNavegacionComponent,
+    ErrorNavegacionComponent,
+    LoginComponent
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -52,6 +57,11 @@ import { MenuNavegacionComponent } from './components/menuApp/menu-navegacion/me
       deps: [COMPILER_OPTIONS],
     },
     { provide: Compiler, useFactory: createCompiler, deps: [CompilerFactory] },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
   ],
 })
 export class AppModule {}

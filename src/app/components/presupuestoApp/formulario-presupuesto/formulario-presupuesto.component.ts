@@ -10,6 +10,7 @@ import {
 
 @Component({
   selector: 'app-formulario-presupuesto',
+  standalone: false, // <-- Cambia de true a false
   templateUrl: './formulario-presupuesto.component.html',
   styleUrls: ['./formulario-presupuesto.component.css'],
 })

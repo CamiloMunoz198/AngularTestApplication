@@ -3,6 +3,7 @@ import { PresupuestoGestionService } from '../../../services/presupuesto-gestion
 
 @Component({
   selector: 'app-header-presupuesto',
+  standalone: false, // <-- Cambia de true a false
   templateUrl: './header-presupuesto.component.html',
   styleUrls: ['./header-presupuesto.component.css'],
 })

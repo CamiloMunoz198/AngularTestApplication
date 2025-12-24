@@ -4,6 +4,7 @@ import { PresupuestoGestionService } from '../../../services/presupuesto-gestion
 
 @Component({
   selector: 'app-ingresos-presupuesto',
+  standalone: false, // <-- Cambia de true a false
   templateUrl: './ingresos-presupuesto.component.html',
   styleUrls: ['./ingresos-presupuesto.component.css']
 })

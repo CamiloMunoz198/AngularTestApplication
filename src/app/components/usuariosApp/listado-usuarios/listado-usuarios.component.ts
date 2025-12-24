@@ -3,6 +3,7 @@ import { UsuariosJsonPlaceHolderService } from '../../../services/usuarios-json-
 
 @Component({
   selector: 'app-listado-usuarios',
+  standalone: false, // <-- Cambia de true a false
   templateUrl: './listado-usuarios.component.html',
   styleUrls: ['./listado-usuarios.component.css'],
 })

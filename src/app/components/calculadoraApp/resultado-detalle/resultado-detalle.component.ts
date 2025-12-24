@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-resultado-detalle',
+  standalone: false, // <-- Cambia de true a false
   templateUrl: './resultado-detalle.component.html',
   styleUrls: ['./resultado-detalle.component.css']
 })

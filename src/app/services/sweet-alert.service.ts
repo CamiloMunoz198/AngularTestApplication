@@ -12,8 +12,8 @@ export class SweetAlertService {
    * @param title El título del modal.
    * @param text El cuerpo del mensaje.
    */
-  mostrarError(title: string, text: string): void {
-    Swal.fire({
+  mostrarError(title: string, text: string): Promise<any> {
+   return Swal.fire({
       title: title,
       text: text,
       icon: 'error',
@@ -27,18 +27,18 @@ export class SweetAlertService {
    * (Opcional) Muestra un modal de éxito para el cálculo.
    * @param text El resultado del cálculo.
    */
-  mostrarExito(title:string, text: string): void {
-    Swal.fire({
+  mostrarExito(title:string, text: string): Promise<any> {
+   return Swal.fire({
       title: title,
       text: text,
       icon: 'success',
-      timer: 3000, // Se cierra automáticamente después de 3 segundos
-      showConfirmButton: false,
+      timer: 5000, // Se cierra automáticamente después de 3 segundos
+      showConfirmButton: true,
     });
   }
 
-  mostrarAdvertencia(title: string, text: string): void {
-    Swal.fire({
+  mostrarAdvertencia(title: string, text: string): Promise<any> {
+   return Swal.fire({
       title: title,
       text: text,
       icon: 'warning',

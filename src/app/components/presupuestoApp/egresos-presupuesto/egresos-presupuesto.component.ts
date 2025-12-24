@@ -4,6 +4,7 @@ import { PresupuestoGestionService } from '../../../services/presupuesto-gestion
 
 @Component({
   selector: 'app-egresos-presupuesto',
+  standalone: false, // <-- Cambia de true a false
   templateUrl: './egresos-presupuesto.component.html',
   styleUrls: ['./egresos-presupuesto.component.css']
 })

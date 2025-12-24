@@ -1,12 +1,25 @@
 <div  class="container mt-3">
 <div class="d-flex justify-content-center mt-3">
-  <h5 class="text-success mt-3">Formulario Agregar Producto</h5>
+  <h5 class="text-success mt-3">{{ obtenerIdActual ? 'Editar Producto' : 'Nuevo Producto' }}</h5>
 </div>
-<form class="d-flex justify-content-between  align-item-center my-4 w-50 mx-auto" 
-(submit)="onAgregarProducto()" [formGroup]="productoFormGroup">
 
-  <input type="text" placeholder="Descripcion Prodcuto" class="form-control me-2 w-75" formControlName="Descripcion">
-  <input type="text" placeholder="Valor" class="form-control me-2 w-25" formControlName="Valor">
-  <button type="submit" class="btn btn-primary">Agregar</button>
+<form class="my-4 w-50 mx-auto" 
+(submit)="onAgregarProducto()" [formGroup]="productoFormGroup">
+<div class="d-flex justify-content-between  align-items-start ">
+  <input type="text" placeholder="Descripcion Prodcuto" class="form-control me-2 w-100" formControlName="Descripcion">
+  <input type="number" placeholder="Valor" class="form-control me-2 w-100" formControlName="Valor">
+</div>
+<div class="d-flex justify-content-center  align-items-center me-2 mt-3 ms-3">
+  <button type="submit" [disabled]="cargando" class="btn btn-primary me-2 w-100">
+  <span *ngIf="cargando" class="spinner-border spinner-border-sm"></span>
+  {{ cargando ? ' Procesando...' : (obtenerIdActual ? 'Actualizar' : 'Agregar') }}
+  </button>
+  <button type="button" class="btn btn-warning me-2 w-100" (click)="volver()"> Cancelar</button>
+  <ng-container *ngIf="obtenerIdActual!=null">
+  <button type="button" class="btn btn-danger me-2 w-100" [disabled]="cargando" (click)="eliminarProducto()"> Eliminar</button>
+</ng-container>
+</div>
+
+
 </form>
 </div>

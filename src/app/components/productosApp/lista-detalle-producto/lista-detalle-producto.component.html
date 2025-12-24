@@ -5,14 +5,15 @@
 <div class="d-flex justify-content-center mt-5">
 <h3 class="text-warning">Listado De Productos</h3>
 </div>
-<ul class="list-group w-50 mx-auto">
-<li *ngFor="let productoItem of ProductoList" class="list-group-item text-center">
+<div class="d-flex justify-content-center mt-5">
+<button class="btn btn-primary" (click)="agregagarProducto()">Agregar Producto</button>
+</div>
+<ul class="list-group w-50 mx-auto mt-5">
+<li *ngFor="let productoItem of ProductoList$ | async" class="list-group-item text-center">
 <app-producto [productoInput]="productoItem"></app-producto>
 </li>
 </ul>
-<div class="d-flex justify-contecnt-center mt-3">
-<!-- <app-formulario-producto (nuevoProductoOutPut)="onAgregarProductoList($event)"></app-formulario-producto> -->
+<div class="d-flex justify-content-center mt-3">
 <app-formulario-producto></app-formulario-producto>
 </div>
-
 </div>
