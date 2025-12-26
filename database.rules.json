@@ -1,6 +1,6 @@
 {
   "rules": {
-    ".read": "auth != null",  // 2026-1-21
-    ".write": "auth != null",  // 2026-1-21
+    ".read": "auth != null",
+    ".write": "auth != null"
   }
 }    
