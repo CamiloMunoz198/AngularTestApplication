@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SweetAlertService } from '../services/sweet-alert.service';
 import { DataFireBaseRealTimeService } from '../services/data-fire-base-real-time.service';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({providedIn:'root'})
@@ -12,7 +13,7 @@ export class AuthInterceptor implements HttpInterceptor {
   
   constructor  (private alertService:SweetAlertService,private dataFareBaseService:DataFireBaseRealTimeService)
   {}
-  private readonly URL_FIREBASE = 'https://myappangulartest-default-rtdb.firebaseio.com/';
+  private readonly URL_FIREBASE = environment.urlFireBase;
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('session_token');

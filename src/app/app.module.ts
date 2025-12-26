@@ -27,6 +27,11 @@ import { MenuNavegacionComponent } from './components/menuApp/menu-navegacion/me
 import { ErrorNavegacionComponent } from './components/error-navegacion/error-navegacion.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { ControlUsuariosComponent } from "./components/controlUsuariosAPP/control-usuarios/control-usuarios.component";
+import { DashboardCtlrUsuariosComponent } from './components/controlUsuariosAPP/dashboard-ctlr-usuarios/dashboard-ctlr-usuarios.component';
+import { ClientesCtlrUsuariosComponent } from './components/controlUsuariosAPP/clientes-ctlr-usuarios/clientes-ctlr-usuarios.component';
+import { FormClientesCtlrUsuariosComponent } from './components/controlUsuariosAPP/form-clientes-ctlr-usuarios/form-clientes-ctlr-usuarios.component';
+import { FooterPageComponent } from './components/footerAPP/footer-page/footer-page.component';
 
 @NgModule({
   imports: [BrowserModule, ReactiveFormsModule, HttpClientModule,AppRoutingModule],
@@ -46,7 +51,12 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     IngresosPresupuestoComponent,
     MenuNavegacionComponent,
     ErrorNavegacionComponent,
-    LoginComponent
+    LoginComponent,
+    ControlUsuariosComponent,
+    DashboardCtlrUsuariosComponent,
+    ClientesCtlrUsuariosComponent,
+    FormClientesCtlrUsuariosComponent,
+    FooterPageComponent,
   ],
   bootstrap: [AppComponent],
   providers: [

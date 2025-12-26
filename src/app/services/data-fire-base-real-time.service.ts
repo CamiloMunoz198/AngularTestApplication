@@ -4,13 +4,17 @@ import { BehaviorSubject,Observable } from 'rxjs';
 import { ProductoInterface } from '../models/producto.interface';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { ClienteCtrlInterface } from '../models/cliente-ctrl-interface';
+
 
 @Injectable({ providedIn: 'root' })
 export class DataFireBaseRealTimeService {
-  urlFireBase: string = 'https://myappangulartest-default-rtdb.firebaseio.com/';
-  urlGooleIdentity: string =
-    'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
-  apiKeyFireBase: string = 'AIzaSyAIPE5A7H4-QxXu-Q-takOUmEVreYVGuHk';
+  urlFireBase: string = environment.urlFireBase;
+  urlGooleIdentity: string = environment.urlGooleIdentity;
+  apiKeyFireBase: string = environment.apiKeyFireBase;
+
+  urlApiFireStoreClientes = environment.urlFireStore+'Clientes';
 
   urlFireBaseKeyLogin = this.urlGooleIdentity + this.apiKeyFireBase;
 
@@ -124,6 +128,55 @@ resetearRelojInactividad() {
     
   }
 
+  //FireStore Methods Placeholder
+  // 1. OBTENER TODOS LOS CLIENTES
+  getClientes(): Observable<ClienteCtrlInterface[]> {
+    return this.peticionesHttp.get(this.urlApiFireStoreClientes).pipe(
+      map((res: any) => {
+        if (!res.documents) return [];
+
+        return res.documents.map((doc: any) => {
+          const fields = doc.fields;
+          return {
+            Id: doc.name.split('/').pop(), // Extrae el ID del final de la ruta
+            Nombres: fields.Nombres?.stringValue || '',
+            Apellidos: fields.Apellidos?.stringValue || '',
+            Email: fields.Email?.stringValue || '',
+            Saldo: Number(fields.Saldo?.doubleValue || fields.Saldo?.integerValue || 0)
+          };
+        });
+      })
+    );
+  }
+
+  // 2. GUARDAR O ACTUALIZAR
+  // Firestore REST usa POST para crear (ID automático) 
+  // o PATCH para actualizar un documento específico
+  guardarOActualizarCliente(cliente: ClienteCtrlInterface): Observable<any> {
+    const bodyFirestore = {
+      fields: {
+        Nombres: { stringValue: cliente.Nombres },
+        Apellidos: { stringValue: cliente.Apellidos },
+        Email: { stringValue: cliente.Email },
+        Saldo: { doubleValue: cliente.Saldo }
+      }
+    };
+
+    if (cliente.Id) {
+      // ACTUALIZAR (PATCH)
+      // Se debe usar updateMask para indicar qué campos cambian
+      const params = '?updateMask.fieldPaths=Nombres&updateMask.fieldPaths=Apellidos&updateMask.fieldPaths=Email&updateMask.fieldPaths=Saldo';
+      return this.peticionesHttp.patch(`${this.urlApiFireStoreClientes}/${cliente.Id}${params}`, bodyFirestore);
+    } else {
+      // CREAR NUEVO (POST)
+      return this.peticionesHttp.post(this.urlApiFireStoreClientes, bodyFirestore);
+    }
+  }
+
+  // 3. ELIMINAR
+  eliminarCliente(id: string): Observable<any> {
+    return this.peticionesHttp.delete(`${this.urlApiFireStoreClientes}/${id}`);
+  }
 
 
 }
