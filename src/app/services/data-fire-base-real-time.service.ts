@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject,Observable } from 'rxjs';
 import { ProductoInterface } from '../models/producto.interface';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class DataFireBaseRealTimeService {
@@ -16,13 +17,33 @@ export class DataFireBaseRealTimeService {
   private token$ = new BehaviorSubject<string>('');
   obtenerToken():Observable<string>{return this.token$.asObservable();}
 
-  constructor(private peticionesHttp: HttpClient) {
+
+private timerInactividad: any;
+private readonly MINUTOS_EXPIRACION = 1; // <--- Configura aquí el tiempo
+
+resetearRelojInactividad() {
+  if (this.timerInactividad) {
+    clearTimeout(this.timerInactividad);
+  }
+
+  this.timerInactividad = setTimeout(() => {
+    console.warn('Sesión expirada por inactividad');
+    this.logOutService();
+    // Opcional: Recargar la página para asegurar que el Guard actúe
+    window.location.reload(); 
+  }, this.MINUTOS_EXPIRACION * 60 * 1000);
+}
+
+  constructor(private peticionesHttp: HttpClient,
+    private router:Router) {
     const tokenPersistente = localStorage.getItem('session_token');
   if (tokenPersistente) {
     this.token$.next(tokenPersistente);
   }
   }
   
+
+
 
  private loginFireBase(email: string, pass: string): Observable<any> {
     const authData = {
@@ -90,9 +111,17 @@ export class DataFireBaseRealTimeService {
   }
 
   logOutService(){
+    // 1. Limpia el timer para que no se sigan creando hilos en memoria
+  if (this.timerInactividad) {clearTimeout(this.timerInactividad)};
+  //Limpieza Sesion LocalStorage
     localStorage.removeItem('session_token');
+    //Limpiesa Token en Observable
     this.token$.next('');
+    //Log para ver en consola
     console.log('entro al logout');
+    //Redireccion
+    this.router.navigate(['/Login']);
+    
   }
 
 

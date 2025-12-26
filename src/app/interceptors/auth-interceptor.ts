@@ -3,7 +3,6 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SweetAlertService } from '../services/sweet-alert.service';
-import { Router } from '@angular/router';
 import { DataFireBaseRealTimeService } from '../services/data-fire-base-real-time.service';
 
 
@@ -11,7 +10,7 @@ import { DataFireBaseRealTimeService } from '../services/data-fire-base-real-tim
 export class AuthInterceptor implements HttpInterceptor {
 
   
-  constructor  (private alertService:SweetAlertService, private router:Router,private dataFareBaseService:DataFireBaseRealTimeService)
+  constructor  (private alertService:SweetAlertService,private dataFareBaseService:DataFireBaseRealTimeService)
   {}
   private readonly URL_FIREBASE = 'https://myappangulartest-default-rtdb.firebaseio.com/';
 
@@ -39,7 +38,7 @@ export class AuthInterceptor implements HttpInterceptor {
               'Tu tiempo de conexión ha terminado por seguridad. Por favor, ingresa de nuevo.'
             ).then(() => {
               // 3. Redirigimos al login SOLO después de que el usuario cierre la alerta
-              this.router.navigate(['/Login']);
+              this.dataFareBaseService.logOutService();
             });
           }
         }

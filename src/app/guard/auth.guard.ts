@@ -1,10 +1,9 @@
 import { inject } from '@angular/core';
-import { CanActivateFn,Router} from '@angular/router';
+import { CanActivateFn} from '@angular/router';
 import { SweetAlertService } from '../services/sweet-alert.service';
 import { DataFireBaseRealTimeService } from '../services/data-fire-base-real-time.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  const router = inject(Router);
   const alertService = inject(SweetAlertService);
   const dataFareBaseService = inject(DataFireBaseRealTimeService);
   
@@ -23,8 +22,6 @@ export const authGuard: CanActivateFn = (route, state) => {
 ()=>
       {dataFareBaseService.logOutService();}
     );
-    
-    router.navigate(['/Login']);
     return false;
   }
 };
