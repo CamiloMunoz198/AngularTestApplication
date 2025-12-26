@@ -32,3 +32,4 @@ Desktop.ini
 .env.local
 
 # NOTA: NO estamos incluyendo package-lock.json para que se suba al repositorio
+.firebase/hosting.ZGlzdFxkZW1v.cache
