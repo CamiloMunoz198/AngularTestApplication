@@ -14,6 +14,7 @@ export class ClientesCtlrUsuariosComponent implements OnInit, OnDestroy{
 
 
 cargando: boolean = true; // Inicia en true para mostrar el loader de inmediato
+loaderVisible: boolean = true; // Controla la opacidad (CSS)
 
 @ViewChild(FormClientesCtlrUsuariosComponent) formularioCliente!: FormClientesCtlrUsuariosComponent;
 private destroy$ = new Subject<void>(); // Para limpieza de memoria
@@ -28,9 +29,14 @@ private destroy$ = new Subject<void>(); // Para limpieza de memoria
     this.clienteGesService.obtenerListaClientes$
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (clientes) => {
-          // Si los datos llegaron (aunque sea un array vacío), quitamos el loader
+        next: (clientes) => {       
+
+        // 2. Esperamos los 0.3s del CSS para quitarlo del DOM
+        setTimeout(() => {
+            // 1. Iniciamos el desvanecimiento de salida
+        this.loaderVisible = false;
           this.cargando = false;
+        }, 300);
         },
         error: (err) => {
           console.error("Error cargando clientes", err);

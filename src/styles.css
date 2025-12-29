@@ -88,4 +88,25 @@ header, nav {
     display: block;
     margin-top: 0; /* Evita que el menú parpadee al moverse */
   }
+
+/* El spinner empieza visible */
+.fade-out {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+/* Cuando esta clase se aplique, se desvanecerá */
+.hidden {
+  opacity: 0;
+}
+
+/* Para la tabla (Entrada suave) */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 }
