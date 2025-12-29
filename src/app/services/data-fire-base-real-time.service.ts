@@ -14,16 +14,16 @@ export class DataFireBaseRealTimeService {
   urlGooleIdentity: string = environment.urlGooleIdentity;
   apiKeyFireBase: string = environment.apiKeyFireBase;
 
-  urlApiFireStoreClientes = environment.urlFireStore+'Clientes';
-
+  urlApiFireStoreClientes = environment.urlFireStore+'/Clientes';//Para acceder a la coleccion Clientes
+  urlRunQuery = environment.urlFireStore+':runQuery'; // Para correr Queries
   urlFireBaseKeyLogin = this.urlGooleIdentity + this.apiKeyFireBase;
-
+  minutosExpiracion = environment.expirationSessionMinutes;
   private token$ = new BehaviorSubject<string>('');
   obtenerToken():Observable<string>{return this.token$.asObservable();}
 
 
 private timerInactividad: any;
-private readonly MINUTOS_EXPIRACION = 1; // <--- Configura aquí el tiempo
+private readonly MINUTOS_EXPIRACION = this.minutosExpiracion; // <--- Configura aquí el tiempo
 
 resetearRelojInactividad() {
   if (this.timerInactividad) {
@@ -131,20 +131,35 @@ resetearRelojInactividad() {
   //FireStore Methods Placeholder
   // 1. OBTENER TODOS LOS CLIENTES
   getClientes(): Observable<ClienteCtrlInterface[]> {
-    return this.peticionesHttp.get(this.urlApiFireStoreClientes).pipe(
-      map((res: any) => {
-        if (!res.documents) return [];
 
-        return res.documents.map((doc: any) => {
-          const fields = doc.fields;
-          return {
+    const body = {
+    structuredQuery: {
+      from: [{ collectionId: 'Clientes' }]
+      // ,orderBy: [
+      //   {
+      //     field: { fieldPath: 'createdDate' },
+      //     direction: 'DESCENDING' // O 'ASCENDING'
+      //   }
+      // ]
+    }
+  };
+
+    return this.peticionesHttp.post(this.urlRunQuery, body).pipe(
+    map((res: any[]) => {
+      // Nota: runQuery devuelve un array de objetos { document: { fields: ... } }
+      return res.filter(item => item.document).map(item => {
+        const doc = item.document;
+        return {
             Id: doc.name.split('/').pop(), // Extrae el ID del final de la ruta
-            Nombres: fields.Nombres?.stringValue || '',
-            Apellidos: fields.Apellidos?.stringValue || '',
-            Email: fields.Email?.stringValue || '',
-            Saldo: Number(fields.Saldo?.doubleValue || fields.Saldo?.integerValue || 0)
+            Nombres: doc.fields.Nombres?.stringValue || '',
+            Apellidos: doc.fields.Apellidos?.stringValue || '',
+            Email: doc.fields.Email?.stringValue || '',
+            Saldo: Number(doc.fields.Saldo?.doubleValue || doc.fields.Saldo?.integerValue || 0),
+            // LEEMOS EL CAMPO DE SISTEMA AQUÍ:
+            creadoEn: new Date(doc.createTime).getTime()
           };
-        });
+        })// ORDENAMOS POR EL TIEMPO DE SISTEMA (Descendente)
+        .sort((a, b) => b.creadoEn - a.creadoEn);
       })
     );
   }

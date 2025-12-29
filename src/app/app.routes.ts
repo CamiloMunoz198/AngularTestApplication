@@ -8,9 +8,13 @@ import { ErrorNavegacionComponent } from './components/error-navegacion/error-na
 import { LoginComponent } from './components/login/login.component';
 import { authGuard } from './guard/auth.guard';
 import { loginGuard } from './guard/login.guard';
+import { FormClientesCtlrUsuariosComponent } from './components/controlUsuariosAPP/form-clientes-ctlr-usuarios/form-clientes-ctlr-usuarios.component';
+import { ControlUsuariosComponent } from './components/controlUsuariosAPP/control-usuarios/control-usuarios.component';
+import { DashboardCtlrFormComponent } from './components/controlUsuariosAPP/dashboard-ctlr-form/dashboard-ctlr-form.component';
 
 export const routes: Routes = [
-  { path: '', component: LoginComponent, canActivate: [loginGuard]},
+  //{ path: '', component: ControlUsuariosComponent},
+   { path: '', component: LoginComponent, canActivate: [loginGuard]},
   { path: 'Login', component: LoginComponent},
   { path: 'Calculadora', component: CalculadoraComponent, canActivate: [authGuard] },
   { path: 'Presupuesto', component: PresupuestoComponent,canActivate: [authGuard] },
@@ -21,8 +25,13 @@ export const routes: Routes = [
   { path: 'Presupuesto', component: PresupuestoComponent,canActivate: [authGuard] },
   { path: 'Productos', component: ListaDetalleProductoComponent,canActivate: [authGuard] },
   { path: 'Usuarios', component: ListadoUsuariosComponent,canActivate: [authGuard] },
-  ]},
+  { path: 'ControlUsuarios', component: ControlUsuariosComponent,canActivate: [authGuard]},
+]},
   { path: 'AgregarProducto', component: FormularioProductoComponent,canActivate: [authGuard] },
   { path: 'EditarProducto/:Id', component: FormularioProductoComponent,canActivate: [authGuard] },
+  { path: 'ControlUsuarios', component: ControlUsuariosComponent,canActivate: [authGuard]},
+  { path: 'ControlUsuarios', children: [
+    { path: 'EditarCliente/:Id', component: DashboardCtlrFormComponent, canActivate: [authGuard]}
+  ]},
   {path :'**',component:ErrorNavegacionComponent}
 ];

@@ -14,6 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor  (private alertService:SweetAlertService,private dataFareBaseService:DataFireBaseRealTimeService)
   {}
   private readonly URL_FIREBASE = environment.urlFireBase;
+  private readonly URL_FIRESTORE = environment.urlFireStore;
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('session_token');
@@ -25,9 +26,17 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
 
+        if (token && req.url.startsWith(this.URL_FIRESTORE)) {
+      request = req.clone({
+        setHeaders: {
+            Authorization: `Bearer ${token}`
+          }
+      });
+    }
+
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (req.url.startsWith(this.URL_FIREBASE)) {
+        if (req.url.startsWith(this.URL_FIREBASE)||req.url.startsWith(this.URL_FIRESTORE)) {
           
           if (error.status === 401 || error.status === 403 || error.status === 404) {
             // 1. Limpiamos el token inmediatamente

@@ -32,6 +32,8 @@ import { DashboardCtlrUsuariosComponent } from './components/controlUsuariosAPP/
 import { ClientesCtlrUsuariosComponent } from './components/controlUsuariosAPP/clientes-ctlr-usuarios/clientes-ctlr-usuarios.component';
 import { FormClientesCtlrUsuariosComponent } from './components/controlUsuariosAPP/form-clientes-ctlr-usuarios/form-clientes-ctlr-usuarios.component';
 import { FooterPageComponent } from './components/footerAPP/footer-page/footer-page.component';
+import { HeaderClientesCtlrUsuaiosComponent } from './components/controlUsuariosAPP/header-clientes-ctlr-usuaios/header-clientes-ctlr-usuaios.component';
+import { DashboardCtlrFormComponent } from './components/controlUsuariosAPP/dashboard-ctlr-form/dashboard-ctlr-form.component';
 
 @NgModule({
   imports: [BrowserModule, ReactiveFormsModule, HttpClientModule,AppRoutingModule],
@@ -57,6 +59,8 @@ import { FooterPageComponent } from './components/footerAPP/footer-page/footer-p
     ClientesCtlrUsuariosComponent,
     FormClientesCtlrUsuariosComponent,
     FooterPageComponent,
+    HeaderClientesCtlrUsuaiosComponent,
+    DashboardCtlrFormComponent
   ],
   bootstrap: [AppComponent],
   providers: [

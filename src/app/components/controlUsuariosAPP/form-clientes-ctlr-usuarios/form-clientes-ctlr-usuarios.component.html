@@ -1,1 +1,65 @@
-<p>form-clientes-ctlr-usuarios works!</p>
+<div class="container">
+    <div class="d-flex align-items-center mb-3">
+        <form class="w-100" [formGroup]="clienteFormGroup" (submit)="guardarCliente()">
+                <div class="d-flex align-items-center mb-3">
+                <label for="nombres" class="input-group-text bg-info text-white me-3" style="min-width: 100px;">
+                    <i class="bi bi-person-fill"></i> Nombres
+                </label>
+                <div class="col-sm-9">
+                <input type="text" id="nombres" class="form-control" 
+                formControlName="NombresFormControl" placeholder="Ingrese los nombres"
+                [class.is-invalid]="campoEsInvalido('NombresFormControl')">        
+                <div class="invalid-feedback">
+                    {{ obtenerMensajeError('NombresFormControl') }}
+                </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center mb-3">
+                <label for="apellidos" class="input-group-text bg-info text-white me-3" style="min-width: 100px;">
+                    <i class="bi bi-person-fill"></i> Apellidos
+                </label>
+                <div class="col-sm-9">
+                <input type="text" id="apellidos" class="form-control"
+                formControlName="ApellidosFormControl" placeholder="Ingrese los apellidos"
+                [class.is-invalid]="campoEsInvalido('ApellidosFormControl')">
+                <div class="invalid-feedback">
+                    {{ obtenerMensajeError('ApellidosFormControl') }}
+                </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center mb-3">
+                <label for="email" class="input-group-text bg-info text-white me-3" style="min-width: 100px;">
+                    <i class="bi bi-envelope-fill"></i> Email
+                </label>
+                <div class="col-sm-9">
+                <input type="email" id="email" class="form-control"
+                formControlName="EmailFormControl" placeholder="Ingrese el email"
+                [class.is-invalid]="campoEsInvalido('EmailFormControl')">
+                <div class="invalid-feedback">
+                    {{ obtenerMensajeError('EmailFormControl') }}
+                </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center mb-3">
+                <label for="saldo" class="input-group-text bg-info text-white me-3" style="min-width: 100px;">
+                    <i class="bi bi-currency-dollar"></i> Saldo
+                </label>
+                <div class="col-sm-9">
+                <input type="number" id="saldo" class="form-control"
+                formControlName="SaldoFormControl" placeholder="Ingrese el saldo"
+                [class.is-invalid]="campoEsInvalido('SaldoFormControl')">
+                <div class="invalid-feedback">
+                    {{ obtenerMensajeError('SaldoFormControl') }}
+                </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+                <button type="submit" [disabled]="cargando" class="btn btn-primary">                
+                <span *ngIf="cargando" class="spinner-border spinner-border-sm"></span>
+                <i class="bi bi-save2-fill"></i> {{ cargando ? ' Procesando...' : (obtenerIdActual ? 'Actualizar' : 'Agregar') }}
+                </button>
+            </div>
+        </form>
+    </div>
+    </div>

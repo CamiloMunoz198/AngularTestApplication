@@ -59,3 +59,33 @@ body.bg-dark .text-danger {
   position: relative;
   z-index: 10000; /* Asegura que la barra siempre esté encima de todo */
 }
+
+/* Selecciona el placeholder en todos los navegadores modernos */
+.form-control::placeholder {
+    color: #ced4da !important; /* Gris muy claro, casi blanco */
+    opacity: 1; /* Asegura que el color se vea sólido */
+}
+
+/* Opcional: Si quieres que se vea aún más claro al enfocar el input */
+.form-control:focus::placeholder {
+    color: #e9ecef !important;
+}
+
+.modal-backdrop {
+    z-index: 1050 !important;
+}
+.modal {
+    z-index: 1060 !important;
+}
+/* Si tu menú tiene un z-index muy alto, esto lo corregirá */
+header, nav {
+    z-index: 1040 !important; 
+}
+
+/* Cuando el mouse está sobre el li, mostramos el ul */
+@media (min-width: 992px) {
+  .nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* Evita que el menú parpadee al moverse */
+  }
+}

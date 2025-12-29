@@ -34,6 +34,10 @@
           <a class="nav-link" [routerLink]="['/Usuarios']" routerLinkActive="active" (click)="cerrarMenu()">Usuarios</a>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/ControlUsuarios']" routerLinkActive="active" (click)="cerrarMenu()">Gestion Clientes</a>
+        </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" 
              style="cursor: pointer;" 
@@ -45,6 +49,7 @@
             <li><a class="dropdown-item" [routerLink]="['/Opciones/Presupuesto']" (click)="cerrarMenu()">Presupuesto</a></li>
             <li><a class="dropdown-item" [routerLink]="['/Opciones/Usuarios']" (click)="cerrarMenu()">Usuarios</a></li>
             <li><a class="dropdown-item" [routerLink]="['/Opciones/Productos']" (click)="cerrarMenu()">Productos</a></li>
+             <li><a class="dropdown-item" [routerLink]="['/Opciones/ControlUsuarios']" (click)="cerrarMenu()">Gestion Clientes</a></li>
           </ul>
         </li>
 
