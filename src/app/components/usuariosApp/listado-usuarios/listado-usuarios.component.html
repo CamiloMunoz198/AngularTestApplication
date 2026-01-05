@@ -1,11 +1,18 @@
 <div class="row justify-content-center">
   <div class="col-md-6">
-    <ul class="list-group">
+    <div *ngIf="cargando" class="d-flex justify-content-center align-items-center py-5 fade-out"
+      [class.hidden]="!loaderVisible">
+      <div class="text-center">
+        <div class="spinner-border text-info" role="status" style="width: 3rem; height: 3rem;">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-2 text-muted fw-bold">Consultando base de datos...</p>
+      </div>
+    </div>
+
+    <ul class="list-group fade-in" *ngIf="!cargando">
       <ng-container *ngIf="usuariosList.length > 0; else sinUsuarios">
-        <li
-          *ngFor="let usario of usuariosList"
-          class="list-group-item text-center"
-        >
+        <li *ngFor="let usario of usuariosList" class="list-group-item text-center">
           {{ usario.id }} - {{ usario.name }}
         </li>
       </ng-container>
